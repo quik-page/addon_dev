@@ -1,0 +1,1 @@
+quik.alert('Hello,World!');
