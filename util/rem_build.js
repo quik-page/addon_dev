@@ -36,17 +36,17 @@ var ijs = function (code, cb, rootPath) {
       var url=eval(item.substring(item.indexOf('(')+1,item.lastIndexOf(')')));
       if(cache[url]){
         if(url.lastIndexOf('.js')==url.length-3||url.lastIndexOf('.json')==url.length-5){
-          code=code.replace(item,cache[url]);
+          code=code.replace(item,cache[url].replace(/\$\$/g,'$$$$$$$$'));
         }else{
-          code=code.replace(item,zhuanyi(cache[url]));
+          code=code.replace(item,zhuanyi(cache[url]).replace(/\$\$/g,'$$$$$$$$'));
         }
       }else{
         bcbs.push(new Promise(function(r,j){
           qjs(url,function(codes){
             if(url.lastIndexOf('.js')==url.length-3||url.lastIndexOf('.json')==url.length-5){
-              code=code.replace(item,codes);
+              code=code.replace(item,codes.replace(/\$\$/g,'$$$$$$$$'));
             }else{
-              code=code.replace(item,zhuanyi(codes));
+              code=code.replace(item,zhuanyi(codes).replace(/\$\$/g,'$$$$$$$$'));
             }
             r();
           },path.dirname(rootPath))
